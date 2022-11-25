@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebAppCoreMVC.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-flex justify-content-between">
+    <h1>Lista de filmes</h1>
+    <p>
+        <a class="btn btn-outline-success" asp-action="Create">Adicionar novo filme</a>
+    </p>
+</div>
+
+<style>
+    .card{
+        margin: 0.5rem;
+    }
+
+    .card-text{
+        font-size: 10pt;
+    }
+    .price {
+        position: absolute;
+        right: 0;
+        top:0;
+        background-color: white;
+        color: limegreen;
+        padding: 3px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="d-flex justify-content-center">
+    @foreach(var item in Model)
+    {
+        <div class="card" style="width: 15rem;">
+          <img class="card-img-top" src="@item.ThumbUrl" alt="Capa do filme">
+          <div class="price">R$ @item.Price.ToString("0.00")</div>
+          <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                <p class="card-text" style="text-align: justify">
+                    
+                    @if(item.Synopsis.Length >= 110)
+                    {
+                        @item.Synopsis.Substring(0,110)
+                        <text> ...</text>
+                    }
+                    else
+                    {
+                        @item.Synopsis
+                    }
+                </p>
+                <div class="d-flex flex-column ">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Ver mais</a>
+                </div>
+          </div>
+        </div>
+    }
+</div>
+
